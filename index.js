@@ -5,16 +5,12 @@ const PORT = process.env.PORT || 5000
 const apiRouter = require('./routes/api.js')
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
-const authMiddleware = require('./middlewaree/authMiddleware.js')
 const app = express()
 const http = require('http')
 const socketService = require('./service/socketService.js')
 const getUnix = require('./utils/index.js')
 const Market = require('./models/Market.js')
 const GlobalMarketData = require('./data/market.js')
-const Wallet = require('./models/Wallet.js')
-const User = require('./models/User.js')
-const History = require('./models/History.js')
 const server = http.createServer(app)
 // socket
 const io = require('./libs/socket')(server);
@@ -25,7 +21,7 @@ mongoose.set('useCreateIndex', true);
 mongoose.set('useUnifiedTopology', true);
 app.use(cors({
     credentials: true,
-    origin: "http://localhost:3000"
+    origin: "*"
 }));
 app.use(cookieParser());
 app.use(express.json())
