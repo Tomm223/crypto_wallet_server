@@ -23,7 +23,7 @@ mongoose.set('useUnifiedTopology', true)
 app.use(
   cors({
     credentials: true,
-    origin: 'https://crypto-wallet-app.vercel.app/', //true //"http://localhost:3000",
+    origin: 'https://crypto-wallet-app.vercel.app', //true //"http://localhost:3000",
   })
 )
 app.use(cookieParser())
