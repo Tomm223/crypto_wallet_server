@@ -3,30 +3,33 @@ const mongoose = require('mongoose')
 const authRouter = require('./routes/auth.js')
 const PORT = process.env.PORT || 5000
 const apiRouter = require('./routes/api.js')
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
+const cors = require('cors')
+const cookieParser = require('cookie-parser')
 const app = express()
 const http = require('http')
 const socketService = require('./service/socketService.js')
 const getUnix = require('./utils/index.js')
 const Market = require('./models/Market.js')
 const GlobalMarketData = require('./data/market.js')
+
 const server = http.createServer(app)
 // socket
-const io = require('./libs/socket')(server);
+const io = require('./libs/socket')(server)
 //
-mongoose.set('useNewUrlParser', true);
-mongoose.set('useFindAndModify', false);
-mongoose.set('useCreateIndex', true);
-mongoose.set('useUnifiedTopology', true);
-app.use(cors({
-  credentials: true,
-  origin: true //"http://localhost:3000",
-}));
-app.use(cookieParser());
+mongoose.set('useNewUrlParser', true)
+mongoose.set('useFindAndModify', false)
+mongoose.set('useCreateIndex', true)
+mongoose.set('useUnifiedTopology', true)
+app.use(
+  cors({
+    credentials: true,
+    origin: 'https://crypto-wallet-app.vercel.app/', //true //"http://localhost:3000",
+  })
+)
+app.use(cookieParser())
 app.use(express.json())
-app.use("/auth", authRouter)
-app.use("/api", apiRouter)
+app.use('/auth', authRouter)
+app.use('/api', apiRouter)
 
 //socket logic
 async function updateServerData() {
@@ -37,7 +40,9 @@ async function updateServerData() {
 
 const start = async () => {
   try {
-    await mongoose.connect(`mongodb+srv://daniil:daniil@cluster0.06smrvn.mongodb.net/?retryWrites=true&w=majority`)
+    await mongoose.connect(
+      `mongodb+srv://daniil:daniil@cluster0.06smrvn.mongodb.net/?retryWrites=true&w=majority`
+    )
     server.listen(PORT, async () => {
       console.log(`server started on port ${PORT}`)
       // забираем из монго данные для пользования
@@ -58,10 +63,6 @@ const start = async () => {
 }
 
 start()
-
-
-
-
 
 /*
  Построение на стеке Heroku-22
